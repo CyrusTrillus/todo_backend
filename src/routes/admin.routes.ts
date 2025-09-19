@@ -6,22 +6,16 @@ import {
   fetchTodo,
   toggle,
 } from "../controllers/todostore.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-// Get all todos
+router.use(authMiddleware); // all todo routes require authentication
+
 router.get("/fetchtodo", fetchTodo);
-
-// Add todo
 router.post("/addtodo", addTodo);
-
-// Toggle todo
 router.put("/:id/toggle", toggle);
-
-// 🔥 Update todo (title + description)
 router.put("/:id/edittodo", editTodo);
-
-// Delete todo
 router.delete("/:id/deletetodo", deleteTodo);
 
 export default router;

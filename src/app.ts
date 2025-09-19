@@ -3,15 +3,15 @@ import dotenv from "dotenv";
 import express from "express";
 import { connectDB } from "./db/connection";
 import todoRoutes from "./routes/admin.routes";
+import authRoutes from "./routes/auth.routes";
 
 dotenv.config();
 
 const app = express();
 
-// ✅ Proper CORS setup
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend URL
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -23,7 +23,10 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// Use Todo routes
+// Auth routes
+app.use("/api/auth", authRoutes);
+
+// Todo routes (protected)
 app.use("/api/todos", todoRoutes);
 
 // Connect DB
